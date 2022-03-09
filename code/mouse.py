@@ -189,7 +189,12 @@ class Actions:
         """Scrolls down continuously"""
         global continuous_scoll_mode
         continuous_scoll_mode = "scroll down continuous"
-        mouse_scroll(setting_mouse_continuous_scroll_amount.get())()
+        
+        ### EDIT to remove jump at the start of the continuous scroll
+        # mouse_scroll(setting_mouse_continuous_scroll_amount.get())()
+        global scroll_amount
+        scroll_amount = setting_mouse_continuous_scroll_amount.get()
+        ###
 
         if scroll_job is None:
             start_scroll()
@@ -205,7 +210,12 @@ class Actions:
         """Scrolls up continuously"""
         global continuous_scoll_mode
         continuous_scoll_mode = "scroll up continuous"
-        mouse_scroll(-setting_mouse_continuous_scroll_amount.get())()
+        
+        ### EDIT to remove jump at the start of the continuous scroll
+        # mouse_scroll(-setting_mouse_continuous_scroll_amount.get())()
+        global scroll_amount
+        scroll_amount = -setting_mouse_continuous_scroll_amount.get()
+        ###
 
         if scroll_job is None:
             start_scroll()
