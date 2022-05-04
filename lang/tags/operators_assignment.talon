@@ -4,14 +4,14 @@ tag(): user.code_operators_math
 tag(): user.code_operators_bitwise
 
 # assignment
-op (equals | assign): user.code_operator_assignment()
+(equeft | assign): user.code_operator_assignment()
 
 # combined computation and assignment
-op (minus | subtract) equals: user.code_operator_subtraction_assignment()
-op (plus | add) equals: user.code_operator_addition_assignment()
-op (times | multiply) equals: user.code_operator_multiplication_assignment()
-op divide equals: user.code_operator_division_assignment()
-op mod equals: user.code_operator_modulo_assignment()
+(minus | subtract) equals: user.code_operator_subtraction_assignment()
+(plus | add) equals: user.code_operator_addition_assignment()
+(times | multiply) equals: user.code_operator_multiplication_assignment()
+divide equals: user.code_operator_division_assignment()
+mod equals: user.code_operator_modulo_assignment()
 [op] increment: user.code_operator_increment()
 
 #bitwise operators

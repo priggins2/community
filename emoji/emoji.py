@@ -12,6 +12,8 @@ ctx.matches = """
 tag: user.emoji
 """
 
+print('emoji')
+
 # --- Define and implement lists ---
 path = Path(__file__).parents[0]
 
