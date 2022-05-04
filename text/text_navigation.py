@@ -65,6 +65,12 @@ def navigation_target(m) -> re.Pattern:
         return re.compile(m.navigation_target_name)
     return re.compile(re.escape(m.text), re.IGNORECASE)
 
+# an alternative comma simple capture rule to capture phrases without having to say phrase
+@mod.capture(rule="<user.word>")
+def navigation_target_word(m) -> re.Pattern:
+    """A phrase target to navigate to. Returns a regular expression."""
+    return re.compile(re.escape(m.word), re.IGNORECASE) 
+
 @mod.action_class
 class Actions:
     def navigation(
@@ -165,6 +171,7 @@ def navigate_left(
     navigation_action, navigation_target_name, before_or_after, regex, occurrence_number, direction
 ):
     current_selection_length = get_current_selection_size()
+    print(current_selection_length)
     if current_selection_length > 0:
         actions.edit.right()
     text = get_text_left() if direction == "LEFT" else get_text_up()
@@ -172,6 +179,7 @@ def navigate_left(
     subtext = (
         text if current_selection_length <= 0 else text[:-current_selection_length]
     )
+    print(subtext)
     match = match_backwards(regex, occurrence_number, subtext)
     if match == None:
         # put back the old selection, if the search failed

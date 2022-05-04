@@ -14,4 +14,4 @@ window zoom: key(cmd-ctrl-z)
 # XXX unlike app Exposé, this is not keyboard navigable
 # window switch: user.launch_bundle('com.apple.exposelauncher')
 window switch: key(ctrl-down)
-mission switch: key(ctrl-up)
+mission: key(ctrl-up)
