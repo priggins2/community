@@ -62,6 +62,7 @@ punctuation_words = {
     "period": ".",
     # "full stop": ".",
     "semicolon": ";",
+    "semi": ";", # ADDED THIS
     "colon": ":",
     "forward slash": "/",
     "slash": "/", # ADDED THIS
@@ -120,17 +121,18 @@ symbol_key_words = {
     "angle": "<",
     "left angle": "<",
     "less than": "<",
-    "rangle": ">",
+    "rangle": ">", # conflicts with randall, disabling for now
     "R angle": ">",
     "right angle": ">",
     "greater than": ">",
     "star": "*",
-    "hash": "#",
+    # "hash": "#",
     "pound": "#", # ADDED THIS
     "percent": "%",
     "caret": "^",
     "amper": "&",
     "pipe": "|",
+    "spike": "|",# ADDED THIS
     "dubquote": '"',
     "double quote": '"',
     "quote": '"', # ADDED THIS
@@ -165,6 +167,7 @@ simple_keys = [
 alternate_keys = {
     # "delete": "backspace",
     "forward delete": "delete",
+    "spunk": "delete", # ADDED THIS
     'junk': 'backspace', # ADDED THIS
     "page up": "pageup",
     "page down": "pagedown",
