@@ -4,7 +4,8 @@ tag(): user.code_operators_math
 tag(): user.code_operators_bitwise
 
 # assignment
-(equeft | assign): user.code_operator_assignment()
+(op equals | op assign | equeft): user.code_operator_assignment()
+op or equals: user.code_or_operator_assignment()
 
 # combined computation and assignment
 (minus | subtract) equals: user.code_operator_subtraction_assignment()
@@ -15,6 +16,11 @@ mod equals: user.code_operator_modulo_assignment()
 [op] increment: user.code_operator_increment()
 
 #bitwise operators
-(op | logical | bitwise) (ex | exclusive) or equals: user.code_operator_bitwise_exclusive_or_equals()
-[(op | logical | bitwise)] (left shift | shift left) equals: user.code_operator_bitwise_left_shift_equals()
-[(op | logical | bitwise)] (left right | shift right) equals: user.code_operator_bitwise_right_shift_equals()
+[op] bit [wise] and equals: user.code_operator_bitwise_and_assignment()
+[op] bit [wise] or equals: user.code_operator_bitwise_or_assignment()
+(op | logical | bitwise) (ex | exclusive) or equals:
+    user.code_operator_bitwise_exclusive_or_assignment()
+[(op | logical | bitwise)] (left shift | shift left) equals:
+    user.code_operator_bitwise_left_shift_assignment()
+[(op | logical | bitwise)] (right shift | shift right) equals:
+    user.code_operator_bitwise_right_shift_assignment()

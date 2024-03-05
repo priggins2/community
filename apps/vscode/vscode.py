@@ -1,4 +1,4 @@
-from talon import Context, actions, ui, Module, app, clip
+from talon import Context, Module, actions, app
 
 is_mac = app.platform == "mac"
 
@@ -25,19 +25,25 @@ and app.name: VSCodium
 os: linux
 and app.name: Codium
 """
-mod.apps.vscode = """
+mod.apps.vscode = r"""
 os: windows
 and app.name: Visual Studio Code
 os: windows
 and app.name: Visual Studio Code Insiders
 os: windows
-and app.exe: Code.exe
+and app.name: Visual Studio Code - Insiders
 os: windows
-and app.exe: Code-Insiders.exe
+and app.exe: /^code\.exe$/i
+os: windows
+and app.exe: /^code-insiders\.exe$/i
 os: windows
 and app.name: VSCodium
 os: windows
-and app.exe: VSCodium.exe
+and app.exe: /^vscodium\.exe$/i
+os: windows
+and app.name: Azure Data Studio
+os: windows
+and app.exe: azuredatastudio.exe
 """
 
 ctx.matches = r"""
@@ -110,6 +116,12 @@ class EditActions:
     def line_clone():
         actions.key("shift-alt-down")
 
+    def line_insert_down():
+        actions.user.vscode("editor.action.insertLineAfter")
+
+    def line_insert_up():
+        actions.user.vscode("editor.action.insertLineBefore")
+
     def jump_line(n: int):
         actions.user.vscode("workbench.action.gotoLine")
         actions.insert(str(n))
@@ -164,6 +176,12 @@ class UserActions:
 
     def split_flip():
         actions.user.vscode("workbench.action.toggleEditorGroupLayout")
+
+    def split_maximize():
+        actions.user.vscode("workbench.action.maximizeEditor")
+
+    def split_reset():
+        actions.user.vscode("workbench.action.evenEditorWidths")
 
     def split_last():
         actions.user.vscode("workbench.action.focusLeftGroup")
@@ -223,29 +241,18 @@ class UserActions:
     def multi_cursor_skip_occurrence():
         actions.user.vscode("editor.action.moveSelectionToNextFindMatch")
 
-    # snippet.py support begin
-    def snippet_search(text: str):
-        actions.user.vscode("editor.action.insertSnippet")
-        actions.insert(text)
-
-    def snippet_insert(text: str):
-        """Inserts a snippet"""
-        actions.user.vscode("editor.action.insertSnippet")
-        actions.insert(text)
-        actions.key("enter")
-
-    def snippet_create():
-        """Triggers snippet creation"""
-        actions.user.vscode("workbench.action.openSnippets")
-
-    # snippet.py support end
-
     def tab_jump(number: int):
         if number < 10:
             if is_mac:
-                actions.user.vscode_with_plugin(f"workbench.action.openEditorAtIndex{number}")
+                actions.user.vscode_with_plugin(
+                    f"workbench.action.openEditorAtIndex{number}"
+                )
             else:
-                actions.key("alt-{}".format(number))
+                actions.key(f"alt-{number}")
+        else:
+            actions.user.vscode_with_plugin(
+                "workbench.action.openEditorAtIndex", number
+            )
 
     def tab_final():
         if is_mac:
@@ -258,9 +265,9 @@ class UserActions:
         """Navigates to a the specified split"""
         if index < 9:
             if is_mac:
-                actions.key("cmd-{}".format(index))
+                actions.key(f"cmd-{index}")
             else:
-                actions.key("ctrl-{}".format(index))
+                actions.key(f"ctrl-{index}")
 
     # splits.py support end
 
@@ -356,3 +363,6 @@ class UserActions:
         actions.edit.find(text)
         actions.sleep("100ms")
         actions.key("esc")
+
+    def insert_snippet(body: str):
+        actions.user.run_rpc_command("editor.action.insertSnippet", {"snippet": body})
