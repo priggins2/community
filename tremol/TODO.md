@@ -1,0 +1,2 @@
+- [ ] "help alphabet" returns the original list rather than my customized keys list. fix that
+    - maybe helpful: https://github.com/splondike/talon_mystuff/blob/main/keys.py
