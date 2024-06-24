@@ -31,6 +31,10 @@ skoopark:
 trail [<user.ordinals>] <user.navigation_target_word>:
     user.navigation("SELECT", "LEFT", "DEFAULT", "DEFAULT", navigation_target_word, ordinals or 1)
 
+nudgle:
+    edit.word_left()
+    edit.delete()
+    edit.word_right()
 
 # MOVEMENT
 
@@ -65,3 +69,8 @@ divvy: insert(" / ")
 creek: core.repeat_command(1)
 gibby: app.window_next()
 shibby: app.window_next()
+
+# simple symbols
+
+precose: insert("(")
+precorp: insert(")")
