@@ -17,9 +17,8 @@ mod.mode("hiss_to_scroll", "mode for commands that are available only when hiss 
 # actions.mode.enable('user.hiss_to_scroll')
 
 # this setting is initialized in mouse.py, though with a different default there
-setting_mouse_continuous_scroll_amount = mod.setting("mouse_continuous_scroll_amount", type=int, default=350)
+ORIGINAL_SPEED = settings.get("mouse_continuous_scroll_amount", default=350)
 
-ORIGINAL_SPEED = setting_mouse_continuous_scroll_amount.get()
 MULTIPLIER = 3 # how quickly to increase or decrease the scroll speed
 
 ctx.settings = {"user.mouse_continuous_scroll_amount": ORIGINAL_SPEED}
@@ -37,19 +36,19 @@ class Actions:
 
     def reverse_scroll():
         """reverse the direction of scroll"""
-        current_value = setting_mouse_continuous_scroll_amount.get()
+        current_value = settings.get("user.setting_mouse_continuous_scroll_amount")
         ctx.settings['user.mouse_continuous_scroll_amount'] = -1 * current_value
 
     def faster_scroll():
         """increase the scroll speed"""
-        current_value = setting_mouse_continuous_scroll_amount.get()
+        current_value = settings.get("user.setting_mouse_continuous_scroll_amount")
         ctx.settings['user.mouse_continuous_scroll_amount'] = MULTIPLIER * current_value
         print(ctx.settings['user.mouse_continuous_scroll_amount'])
-        print(setting_mouse_continuous_scroll_amount.get())
+        print(settings.get("user.setting_mouse_continuous_scroll_amount"))
 
     def slower_scroll():
         """decrease the scroll speed"""
-        current_value = setting_mouse_continuous_scroll_amount.get()
+        current_value = settings.get("user.setting_mouse_continuous_scroll_amount")
         ctx.settings['user.mouse_continuous_scroll_amount'] = MULTIPLIER * current_value
 
 # rate = "50ms"
@@ -111,10 +110,10 @@ def on_hiss(active: bool):
     if not hiss_lock:
         if active:
             actions.user.mouse_scroll_down_continuous()
-            # print('hiss started')
+            print('hiss started')
         else:
             actions.user.mouse_scroll_stop()
-            # print('hiss stopped')
+            print('hiss stopped')
 
 noise.register("hiss", on_hiss)
 # noise.register("hiss", on_hiss_down)

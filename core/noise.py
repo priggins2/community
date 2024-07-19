@@ -23,6 +23,10 @@ class Actions:
         https://noise.talonvoice.com/static/previews/hiss.mp3 for an
         example.
         """
+        if active:
+            print("hiss has started")
+        else:
+            print("hiss has ended")
 
 
 def noise_trigger_hiss_debounce(active: bool):
@@ -37,3 +41,5 @@ def noise_trigger_hiss_debounce(active: bool):
 
 noise.register("pop", lambda _: actions.user.noise_trigger_pop())
 noise.register("hiss", noise_trigger_hiss_debounce)
+# noise.register("hiss", lambda active: actions.user.noise_trigger_hiss(active))
+

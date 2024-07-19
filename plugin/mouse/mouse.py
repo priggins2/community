@@ -41,6 +41,11 @@ hidden_cursor = os.path.join(
 mod = Module()
 ctx = Context()
 
+# needed so changing settings takes precedence over other contexts
+ctx.matches = r"""
+os: mac
+"""
+
 mod.list(
     "mouse_button", desc="List of mouse button words to mouse_click index parameter"
 )
@@ -163,14 +168,9 @@ class Actions:
 
     def mouse_scroll_down_continuous():
         """Scrolls down continuously"""
-        global continuous_scoll_mode
-        continuous_scoll_mode = "scroll down continuous"
-        
-        ### EDIT to remove jump at the start of the continuous scroll
-        # mouse_scroll(setting_mouse_continuous_scroll_amount.get())()
-        global scroll_amount
-        scroll_amount = setting_mouse_continuous_scroll_amount.get()
-        ###
+        global continuous_scroll_mode
+        continuous_scroll_mode = "scroll down continuous"
+        mouse_scroll(settings.get("user.mouse_continuous_scroll_amount"))()
 
         if scroll_job is None:
             start_scroll()
@@ -184,14 +184,9 @@ class Actions:
 
     def mouse_scroll_up_continuous():
         """Scrolls up continuously"""
-        global continuous_scoll_mode
-        continuous_scoll_mode = "scroll up continuous"
-        
-        ### EDIT to remove jump at the start of the continuous scroll
-        # mouse_scroll(-setting_mouse_continuous_scroll_amount.get())()
-        global scroll_amount
-        scroll_amount = -setting_mouse_continuous_scroll_amount.get()
-        ###
+        global continuous_scroll_mode
+        continuous_scroll_mode = "scroll up continuous"
+        mouse_scroll(-settings.get("user.mouse_continuous_scroll_amount"))()
 
         if scroll_job is None:
             start_scroll()
@@ -239,6 +234,11 @@ class Actions:
         rect = ui.active_window().rect
         ctrl.mouse_move(rect.left + (rect.width / 2), rect.top + (rect.height / 2))
 
+    def mouse_move_bottom_right_active_window():
+        """move the mouse cursor to the bottom right of the currently active window"""
+        rect = ui.active_window().rect
+        ctrl.mouse_move(rect.left + (rect.width / 1.05), rect.top + (rect.height / 1.15))
+
     def hiss_scroll_up():
         """Change mouse hiss scroll direction to up"""
         global hiss_scroll_up
@@ -249,6 +249,17 @@ class Actions:
         global hiss_scroll_up
         hiss_scroll_up = False
 
+    def hiss_scroll_reverse():
+        """Toggle mouse hiss scroll direction"""
+        global hiss_scroll_up
+        hiss_scroll_up = not hiss_scroll_up
+
+    def hiss_scroll_onoff():
+        """Toggle hiss to scroll on or off"""
+        setting_name = 'user.mouse_enable_hiss_scroll'
+        current_value = settings.get(setting_name)
+        print(current_value)
+        ctx.settings[setting_name] = not current_value
 
 def show_cursor_helper(show):
     """Show/hide the cursor"""
@@ -305,12 +316,18 @@ class UserActions:
             should_click = (
                 setting_val == 2 and not actions.tracking.control_zoom_enabled()
             ) or (
-                setting_val == 1
+                setting_val in (1, 3)
                 and is_using_eye_tracker
                 and not actions.tracking.control_zoom_enabled()
             )
+            
+            should_toggle = (
+                setting_val == 3
+            )
             if should_click:
                 ctrl.mouse_click(button=0, hold=16000)
+            if should_toggle: 
+                actions.tracking.control_toggle()
 
     def noise_trigger_hiss(active: bool):
         if settings.get("user.mouse_enable_hiss_scroll"):
@@ -331,7 +348,8 @@ def mouse_scroll(amount):
                 scroll_amount += amount
             else:
                 scroll_amount = amount
-        actions.mouse_scroll(y=int(amount))
+        else:
+            actions.mouse_scroll(y=int(amount))
 
     return scroll
 
@@ -340,12 +358,12 @@ def scroll_continuous_helper():
     global scroll_amount
     # print("scroll_continuous_helper")
     if scroll_amount and (eye_zoom_mouse.zoom_mouse.state == eye_zoom_mouse.STATE_IDLE):
-        actions.mouse_scroll(by_lines=False, y=int(scroll_amount / 10))
+        actions.mouse_scroll(by_lines=False, y=int(scroll_amount / 30))
 
 
 def start_scroll():
     global scroll_job
-    scroll_job = cron.interval("60ms", scroll_continuous_helper)
+    scroll_job = cron.interval("6ms", scroll_continuous_helper)
 
 
 def gaze_scroll():
@@ -403,4 +421,4 @@ def stop_scroll():
 def start_cursor_scrolling():
     global scroll_job, gaze_job
     stop_scroll()
-    gaze_job = cron.interval("60ms", gaze_scroll)
+    gaze_job = cron.interval("20ms", gaze_scroll)
