@@ -1,4 +1,5 @@
 import os
+import subprocess
 import platform
 import pprint
 import re
@@ -159,3 +160,29 @@ class Actions:
         apps = ui.apps(name=app, background=False)
         for app in apps:
             pp.pprint(app.windows())
+
+    def talon_last_emit() -> str:
+        """Prints the most recent emitted text. Requires recordings to be enabled"""
+        try:
+            # Execute the shell command
+            home = str(actions.path.talon_home())
+            result = subprocess.run(
+                f'/opt/homebrew/bin/metaflac --show-tag=emit --show-tag=decode "{home}/recordings/$(ls -t {home}/recordings | head -n 1)"',
+                shell=True,
+                capture_output=True,
+                text=True
+            )
+            # print(result)
+            # Print the result
+            actions.app.notify(body=result.stdout)
+            print(result.stdout)
+        except Exception as e:
+            actions.app.notify(body=f"Error: {e}")
+
+    def talon_play_last():
+        """Play the last recording and show what was emitted"""
+        home = str(actions.path.talon_home())
+        command = f'afplay "{home}/recordings/$(ls -t {home}/recordings | head -n 1)"'
+        print(command)
+        actions.user.system_command_nb(command)
+        actions.user.talon_last_emit()

@@ -57,3 +57,12 @@ talon dump context:
 
 talon (bug report | report bug):
     user.open_url("https://github.com/talonhub/community/issues")
+
+^talon last emit$:
+    user.talon_last_emit()
+
+^talon play last$:
+    user.talon_play_last()
+
+^talon open recordings$:
+    user.system_command('open ~/.talon/recordings')
