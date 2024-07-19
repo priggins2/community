@@ -13,6 +13,10 @@ def setup_default_alphabet():
         zip(initial_default_alphabet, initial_letters_string)
     )
 
+    # uppercase_alphabet = "ash baker chain dog egg fox gig horse ice jake king lash mule net oak page quail raft scout tide usurp vessel wicker xray yacht zoo".split(" ")
+    # default_alphabet = default_alphabet + uppercase_alphabet
+    # letters_string = "abcdefghijklmnopqrstuvwxyz" + "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
     return initial_default_alphabet_dict
 
 
@@ -138,7 +142,7 @@ ctx.lists["self.letter"] = alphabet_list
 # `symbol_key_words` is for key names that should be available in command mode, but NOT during dictation.
 punctuation_words = {
     # TODO: I'm not sure why we need these, I think it has something to do with
-    # Dragon. Possibly it has been fixed by later improvements to talon? -rntz
+    # Dragon. Possibly it has been fixed by later improvements to talon? ''-''rntz
     "`": "`",
     ",": ",",  # <== these things
     "back tick": "`",
@@ -156,38 +160,43 @@ punctuation_words = {
     "asterisk": "*",
     "hash sign": "#",
     "number sign": "#",
+    "pound sign": "#",
     "percent sign": "%",
     "at sign": "@",
     "and sign": "&",
     "ampersand": "&",
+    "dash": " — ",
     # Currencies
     "dollar sign": "$",
-    "pound sign": "£",
     "hyphen": "-",
     "L paren": "(",
     "left paren": "(",
+    "open paren": "(",
     "R paren": ")",
     "right paren": ")",
+    "close paren": ")",
 }
 symbol_key_words = {
     "dot": ".",
     "point": ".",
-    "quote": "'",
+    # "quote": "'",
     "question": "?",
     "apostrophe": "'",
+    "prime": "'", # ADDED THIS
     "L square": "[",
     "left square": "[",
-    "brack": "[",
+    # "brack": "[",
     "bracket": "[",
     "left bracket": "[",
     "square": "[",
     "R square": "]",
     "right square": "]",
-    "r brack": "]",
+    # "r brack": "]",
     "r bracket": "]",
     "right bracket": "]",
     "slash": "/",
     "backslash": "\\",
+    # "leader": "\\", # ADDED THIS
     "minus": "-",
     "dash": "-",
     "equals": "=",
@@ -197,6 +206,7 @@ symbol_key_words = {
     "bang": "!",
     "down score": "_",
     "underscore": "_",
+    "crunder": "_",
     "paren": "(",
     "brace": "{",
     "left brace": "{",
@@ -214,16 +224,20 @@ symbol_key_words = {
     "right angle": ">",
     "greater than": ">",
     "star": "*",
-    "hash": "#",
+    # "hash": "#",
+    "pound": "#", # ADDED THIS
     "percent": "%",
     "caret": "^",
     "amper": "&",
     "pipe": "|",
+    "spike": "|",# ADDED THIS
     "dub quote": '"',
     "double quote": '"',
+    # "quote": '"',
     # Currencies
     "dollar": "$",
-    "pound": "£",
+    "dolly": "$", # ADDED THIS
+    # "pound": "£",
 }
 
 # make punctuation words also included in {user.symbol_keys}
@@ -253,10 +267,14 @@ simple_keys = [
 alternate_keys = {
     "wipe": "backspace",
     "delete": "backspace",
-    #'junk': 'backspace',
+    'junk': 'backspace',
+    "spunk": "delete", # ADDED THIS
     "forward delete": "delete",
     "page up": "pageup",
     "page down": "pagedown",
+    'tarp': 'tab', # ADDED THIS
+    'shock': 'enter', # ADDED THIS
+
 }
 # mac apparently doesn't have the menu key.
 if app.platform in ("windows", "linux"):
