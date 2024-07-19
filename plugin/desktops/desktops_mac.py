@@ -29,7 +29,7 @@ def _drag_window_mac(win=None):
 @ctx.action_class("user")
 class MacActions:
     def desktop(number: int):
-        if number < 10:
+        if number <= 5:
             actions.key(f"ctrl-{number}")
 
     def desktop_next():
@@ -50,9 +50,5 @@ class MacActions:
             actions.user.desktop_next()
 
     def window_move_desktop(desktop_number: int):
-        # TODO: amethyst stuff should be pulled out into a separate file
-        if ui.apps(bundle="com.amethyst.Amethyst"):
-            actions.key(f"ctrl-alt-shift-{desktop_number}")
-        else:
-            with _drag_window_mac():
-                actions.user.desktop(desktop_number)
+        if desktop_number <= 5:
+            actions.key(f"ctrl-shift-{desktop_number}")
