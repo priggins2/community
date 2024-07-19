@@ -169,7 +169,7 @@ clone line: edit.line_clone()
 
 # Insert new line
 new line above: edit.line_insert_up()
-new line below | slap: edit.line_insert_down()
+new line below: edit.line_insert_down() # slap
 
 # Insert padding with optional symbols
 (pad | padding): user.insert_between(" ", " ")

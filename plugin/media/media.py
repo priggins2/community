@@ -11,3 +11,7 @@ class Actions:
             actions.key("play_pause")
         else:
             actions.key("play")
+
+    # def media_set_volume(volume: int):
+    #     """change the volume"""
+    #     applescript.run(f"""set volume output volume {volume}""")

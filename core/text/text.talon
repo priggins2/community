@@ -1,8 +1,8 @@
 #provide both anchored and unachored commands via 'over'
-phrase <user.text>$:
+keeper <user.text>$:
     user.add_phrase_to_history(text)
     insert(text)
-phrase <user.text> over:
+keeper <user.text> over:
     user.add_phrase_to_history(text)
     insert(text)
 {user.prose_formatter} <user.prose>$: user.insert_formatted(prose, prose_formatter)
@@ -15,6 +15,9 @@ word <user.word>:
     user.add_phrase_to_history(word)
     insert(word)
 proud <user.word>: user.insert_formatted(word, "CAPITALIZE_FIRST_WORD")
+scrap <user.word>: 
+    edit.select_word()
+    insert(word)
 recent list: user.toggle_phrase_history()
 recent close: user.phrase_history_hide()
 recent repeat <number_small>:

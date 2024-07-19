@@ -6,7 +6,7 @@ address copy | url copy | copy address | copy url:
     browser.focus_address()
     sleep(50ms)
     edit.copy()
-go home: browser.go_home()
+# go home: browser.go_home()
 [go] forward: browser.go_forward()
 go (back | backward): browser.go_back()
 go to {user.website}: browser.go(website)
@@ -25,8 +25,8 @@ history show: browser.show_history()
 cache show: browser.show_clear_cache()
 dev tools [show]: browser.toggle_dev_tools()
 
-# Legacy [verb noun] commands to be removed at a later time
-show downloads: browser.show_downloads()
-show extensions: browser.show_extensions()
-show history: browser.show_history()
-show cache: browser.show_clear_cache()
+# # Legacy [verb noun] commands to be removed at a later time
+# show downloads: browser.show_downloads()
+# show extensions: browser.show_extensions()
+# show history: browser.show_history()
+# show cache: browser.show_clear_cache()
