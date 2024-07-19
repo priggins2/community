@@ -10,26 +10,40 @@ rizzle: key(cmd-shift-z)
 derek <user.text>: 
     insert(' ')
     insert(text)
+darren <user.text>: 
+    key(cmd-right)
+    insert(' ')
+    insert(text)
 comma <user.prose>: 
     insert(', ')
     insert(prose)    
 insert selection: insert(edit.selected_text())
-peachy: key(cmd-w)
+(peachy | pitchy): key(cmd-w)
+sky shock: key(shift-enter)
 
 # EDITING
 
 trough: key(alt-backspace)
 kite: 
-    key(alt-right)
-    key(alt-backspace)
+    key(alt-delete)
+snipple:
+    key(cmd-shift-left)
+    edit.delete()
+snipper:
+    key(cmd-shift-right)
+    edit.delete()
+
+slapper:
+    key(enter)
+    key(enter)
 
 stoosh: key(cmd-c)
 spark: key(cmd-v)
 skoopark: 
     insert(" ")
     key(cmd-v)
-trail [<user.ordinals>] <user.navigation_target_word>:
-    user.navigation("SELECT", "LEFT", "DEFAULT", "DEFAULT", navigation_target_word, ordinals or 1)
+trail [<user.ordinals>] <user.navigation_target>:
+    user.navigation("SELECT", "LEFT", "DEFAULT", "DEFAULT", navigation_target, ordinals or 1)
 
 nudgle:
     edit.word_left()
@@ -63,10 +77,11 @@ swipe: insert(", ")
 prexy: insert("()")
 coal shock: insert(":\n")
 divvy: insert(" / ")
+dotsun: insert(". ")
 
 # COMPLEX FUNCTIONS
 
-creek: core.repeat_command(1)
+creek: core.repeat_phrase(1)
 gibby: app.window_next()
 shibby: app.window_next()
 
