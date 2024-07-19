@@ -5,3 +5,5 @@ app: vscode
 win.title: /focus:\[Terminal\]/
 -
 tag(): terminal
+tag(): user.anaconda
+tag(): user.generic_unix_shell
